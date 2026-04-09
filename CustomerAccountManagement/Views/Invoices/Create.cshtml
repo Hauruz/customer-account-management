@@ -1,0 +1,59 @@
+@model CustomerAccountManagement.ViewModels.Invoices.InvoiceCreateViewModel
+@{
+    ViewData["Title"] = "New Invoice";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>New Invoice</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="ClientId" class="form-label fw-semibold"></label>
+                        <select asp-for="ClientId" class="form-select" asp-items="Model.Clients"></select>
+                        <span asp-validation-for="ClientId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Amount" class="form-label fw-semibold"></label>
+                        <input asp-for="Amount" type="number" step="0.01" min="0.01"
+                               class="form-control" placeholder="0.00" />
+                        <span asp-validation-for="Amount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Currency" class="form-label fw-semibold"></label>
+                        <select asp-for="Currency" class="form-select" asp-items="Model.Currencies"></select>
+                        <span asp-validation-for="Currency" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PdfFile" class="form-label fw-semibold"></label>
+                        <input asp-for="PdfFile" type="file" class="form-control"
+                               accept=".pdf,application/pdf" />
+                        <div class="form-text text-muted">Only PDF files are accepted (max 10 MB).</div>
+                        <span asp-validation-for="PdfFile" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg me-1"></i>Create Invoice
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

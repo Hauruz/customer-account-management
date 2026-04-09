@@ -1,0 +1,18 @@
+## .NET
+*.user
+*.suo
+.vs/
+bin/
+obj/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Uploads (don't commit PDF files)
+CustomerAccountManagement/wwwroot/uploads/*
+!CustomerAccountManagement/wwwroot/uploads/.gitkeep
+
+## ASP.NET Core
+appsettings.Development.json
