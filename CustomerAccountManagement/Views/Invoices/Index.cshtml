@@ -102,34 +102,33 @@ else
                                         _                               => "bg-warning text-dark"
                                     };
                                 }
-                                <span class="badge @badgeClass">@inv.Status</span>
+                                <div class="d-flex align-items-center gap-1 flex-nowrap">
+                                    <span class="badge @badgeClass" style="min-width:68px">@inv.Status</span>
 
-                                @if (inv.Status != nameof(InvoiceStatus.Paid))
-                                {
                                     <form asp-action="UpdateStatus" asp-route-id="@inv.Id"
-                                          method="post" class="d-inline ms-1">
+                                          method="post" class="m-0">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="status" value="@nameof(InvoiceStatus.Paid)" />
                                         <button type="submit"
                                                 class="btn btn-sm btn-outline-success py-0 px-1"
-                                                title="Mark as Paid">
+                                                title="Mark as Paid"
+                                                @(inv.Status == nameof(InvoiceStatus.Paid) ? "disabled" : "")>
                                             <i class="bi bi-check-lg"></i>
                                         </button>
                                     </form>
-                                }
-                                @if (inv.Status != nameof(InvoiceStatus.Cancelled))
-                                {
+
                                     <form asp-action="UpdateStatus" asp-route-id="@inv.Id"
-                                          method="post" class="d-inline">
+                                          method="post" class="m-0">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="status" value="@nameof(InvoiceStatus.Cancelled)" />
                                         <button type="submit"
                                                 class="btn btn-sm btn-outline-secondary py-0 px-1"
-                                                title="Cancel invoice">
+                                                title="Cancel invoice"
+                                                @(inv.Status == nameof(InvoiceStatus.Cancelled) ? "disabled" : "")>
                                             <i class="bi bi-x-lg"></i>
                                         </button>
                                     </form>
-                                }
+                                </div>
                             </td>
                             <td class="text-muted small">@inv.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
                             <td>
