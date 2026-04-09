@@ -29,5 +29,7 @@ public class Invoice
     [MaxLength(500)]
     public string StoredFileName { get; set; } = string.Empty;
 
+    public InvoiceStatus Status { get; set; } = InvoiceStatus.Pending;
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

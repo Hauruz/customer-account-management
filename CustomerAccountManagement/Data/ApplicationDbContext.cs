@@ -56,6 +56,12 @@ public class ApplicationDbContext : DbContext
                   .IsRequired()
                   .HasMaxLength(500);
 
+            entity.Property(i => i.Status)
+                  .IsRequired()
+                  .HasConversion<string>()
+                  .HasMaxLength(20)
+                  .HasDefaultValue(CustomerAccountManagement.Enums.InvoiceStatus.Pending);
+
             entity.Property(i => i.CreatedAt)
                   .HasDefaultValueSql("GETUTCDATE()");
 

@@ -49,6 +49,7 @@ public class InvoicesController : Controller
                 Currency         = i.Currency.ToString(),
                 OriginalFileName = i.OriginalFileName,
                 StoredFileName   = i.StoredFileName,
+                Status           = i.Status.ToString(),
                 CreatedAt        = i.CreatedAt
             })
             .ToListAsync();
@@ -144,6 +145,22 @@ public class InvoicesController : Controller
         await _db.SaveChangesAsync();
 
         TempData["Success"] = "Invoice deleted.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    // POST: /Invoices/UpdateStatus/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateStatus(int id, InvoiceStatus status)
+    {
+        var invoice = await _db.Invoices.FindAsync(id);
+        if (invoice is null)
+            return NotFound();
+
+        invoice.Status = status;
+        await _db.SaveChangesAsync();
+
+        TempData["Success"] = $"Invoice #{id} marked as {status}.";
         return RedirectToAction(nameof(Index));
     }
 
